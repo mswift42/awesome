@@ -85,16 +85,29 @@ markup = lain.util.markup
 white = beautiful.fg_focus
 gray = beautiful.fg_normal
 
--- -- Textclock
--- mytextclock = awful.widget.textclock(markup.font("Sans 3", " ") ..
---                                      markup(white, " %H:%M "))
 
--- -- Calendar
--- lain.widgets.calendar:attach(mytextclock, { fg = beautiful.fg_focus })
 -- CPU
 cpuwidget = lain.widgets.sysload({
     settings = function()
         widget:set_markup(markup(gray, " Cpu ") .. load_1 .. " ")
+    end
+})
+-- Net
+-- Net checker
+netwidget = lain.widgets.net({
+    settings = function()
+        if net_now.state == "up" then net_state = "On"
+        else net_state = "Off" end
+        widget:set_markup(markup(gray, " Net ") .. net_now.received .. ", " .. net_now.sent)
+    end
+})
+
+-- Battery
+batwidget = lain.widgets.bat({
+    settings = function()
+        bat_perc = bat_now.perc
+        if bat_perc == "N/A" then bat_perc = "Plug" end
+        widget:set_markup(markup(gray, " Bat ") .. bat_perc .. " ")
     end
 })
 --alsa
@@ -104,6 +117,9 @@ volmargin:set_top(7)
 volmargin:set_bottom(7)
 volumewidget = wibox.widget.background(volmargin)
 volumewidget:set_bgimage(beautiful.vol_bg)
+
+first = wibox.widget.textbox(markup.font("Tamsyn 4", " "))
+spr = wibox.widget.textbox(' ')
 
 -- {{{ Wallpaper
 if beautiful.wallpaper then
@@ -225,8 +241,14 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
-    right_layout:add(mytextclock)
+    right_layout:add(first)
     right_layout:add(cpuwidget)
+    right_layout:add(spr)
+    right_layout:add(netwidget)
+    right_layout:add(spr)
+    right_layout:add(batwidget)
+    right_layout:add(spr)
+    right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
     -- Now bring it all together (with the tasklist in the middle)
@@ -278,6 +300,12 @@ globalkeys = awful.util.table.join(
                 client.focus:raise()
             end
         end),
+    awful.key({ }, "XF86AudioRaiseVolume", function ()
+		 awful.util.spawn("amixer set Master 9%+", false) end),
+    awful.key({ }, "XF86AudioLowerVolume", function ()
+		 awful.util.spawn("amixer set Master 9%-", false) end),
+    awful.key({ }, "XF86AudioMute", function ()
+		 awful.util.spawn("amixer sset Master toggle", false) end),
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
@@ -365,6 +393,7 @@ for i = 1, 9 do
                       end
                   end))
 end
+
 
 clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
