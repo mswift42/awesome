@@ -89,15 +89,15 @@ gray = beautiful.fg_normal
 -- CPU
 cpuwidget = lain.widgets.sysload({
     settings = function()
-        widget:set_markup(markup(gray, " Cpu ") .. load_1 .. " ")
+        widget:set_markup(markup(gray, " Load ") .. load_1 .. " ")
     end
 })
 -- Net
 -- Net checker
 netwidget = lain.widgets.net({
     settings = function()
-        if net_now.state == "up" then net_state = "On"
-        else net_state = "Off" end
+        -- if net_now.state == "up" then net_state = "On"
+        -- else net_state = "Off" end
         widget:set_markup(markup(gray, " Net ") .. net_now.received .. ", " .. net_now.sent)
     end
 })
