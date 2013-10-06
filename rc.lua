@@ -168,14 +168,16 @@ if beautiful.wallpaper then
 end
 -- }}}
 
--- {{{ Tags
--- Define a tag table which hold all screen tags.
-tags = {}
+tags = {
+    names = {"main", "emacs", "www", "pdf","office","6",7,8,9},
+    layout = {layouts[3],layouts[2],layouts[2],layouts[1],layouts[6],
+              layouts[3],layouts[9],layouts[3],layouts[10]
+}}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
+    tags[s] = awful.tag(tags.names, s, tags.layout)
 end
--- }}}
+
 
 -- {{{ Menu
 -- Create a laucher widget and a main menu
