@@ -10,10 +10,8 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
-local obv_alsa = require("obvious.volume_alsa")
 local lain = require("lain")
 -- local drop = require("scratchdrop")
-
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -118,41 +116,6 @@ batwidget = lain.widgets.bat({
 first = wibox.widget.textbox(markup.font("Tamsyn 4", " "))
 spr = wibox.widget.textbox(' ')
 
--- display volume
-
--- function update_volume(widget)
---    local fd = io.popen("amixer sget Master")
---    local status = fd:read("*all")
---    fd:close()
-
---    local volume = tonumber(string.match(status, "(%d?%d?%d)%%")) / 100
---    -- volume = string.format("% 3d", volume)
-
---    status = string.match(status, "%[(o[^%]]*)%]")
-
---    -- starting colour
---    local sr, sg, sb = 0x3F, 0x3F, 0x3F
---    -- ending colour
---    local er, eg, eb = 0xDC, 0xDC, 0xCC
-
---    local ir = volume * (er - sr) + sr
---    local ig = volume * (eg - sg) + sg
---    local ib = volume * (eb - sb) + sb
---    interpol_colour = string.format("%.2x%.2x%.2x", ir, ig, ib)
---    if string.find(status, "on", 1, true) then
---        volume = " <span background='#" .. interpol_colour .. "'>   </span>"
---    else
---        volume = " <span color='red' background='#" .. interpol_colour .. "'> M </span>"
---    end
---    widget:set_markup(volume)
--- end
-
--- update_volume(volume_widget)
-
--- mytimer = timer({ timeout = 1 })
--- mytimer:connect_signal("timeout", function () update_volume(volume_widget) end)
--- mytimer:start()
-
 -- {{{ Wallpaper
 if beautiful.wallpaper then
     for s = 1, screen.count() do
@@ -170,7 +133,6 @@ for s = 1, screen.count() do
     -- Each screen has its own tag table.
     tags[s] = awful.tag(tags.names, s, tags.layout)
 end
-
 
 -- {{{ Menu
 -- Create a laucher widget and a main menu
