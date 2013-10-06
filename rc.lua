@@ -112,53 +112,46 @@ batwidget = lain.widgets.bat({
         widget:set_markup(markup(gray, " Bat ") .. bat_perc .. " ")
     end
 })
---alsa
-volume = lain.widgets.alsabar()
-volmargin = wibox.layout.margin(volume.bar, 5, 8, 80)
-volmargin:set_top(7)
-volmargin:set_bottom(7)
-volumewidget = wibox.widget.background(volmargin)
-volumewidget:set_bgimage(beautiful.vol_bg)
+
+
 
 first = wibox.widget.textbox(markup.font("Tamsyn 4", " "))
 spr = wibox.widget.textbox(' ')
 
 -- display volume
-volume_widget = wibox.widget.textbox()
-volume_widget:set_align("right")
 
-function update_volume(widget)
-   local fd = io.popen("amixer sget Master")
-   local status = fd:read("*all")
-   fd:close()
+-- function update_volume(widget)
+--    local fd = io.popen("amixer sget Master")
+--    local status = fd:read("*all")
+--    fd:close()
 
-   local volume = tonumber(string.match(status, "(%d?%d?%d)%%")) / 100
-   -- volume = string.format("% 3d", volume)
+--    local volume = tonumber(string.match(status, "(%d?%d?%d)%%")) / 100
+--    -- volume = string.format("% 3d", volume)
 
-   status = string.match(status, "%[(o[^%]]*)%]")
+--    status = string.match(status, "%[(o[^%]]*)%]")
 
-   -- starting colour
-   local sr, sg, sb = 0x3F, 0x3F, 0x3F
-   -- ending colour
-   local er, eg, eb = 0xDC, 0xDC, 0xCC
+--    -- starting colour
+--    local sr, sg, sb = 0x3F, 0x3F, 0x3F
+--    -- ending colour
+--    local er, eg, eb = 0xDC, 0xDC, 0xCC
 
-   local ir = volume * (er - sr) + sr
-   local ig = volume * (eg - sg) + sg
-   local ib = volume * (eb - sb) + sb
-   interpol_colour = string.format("%.2x%.2x%.2x", ir, ig, ib)
-   if string.find(status, "on", 1, true) then
-       volume = " <span background='#" .. interpol_colour .. "'>   </span>"
-   else
-       volume = " <span color='red' background='#" .. interpol_colour .. "'> M </span>"
-   end
-   widget:set_markup(volume)
-end
+--    local ir = volume * (er - sr) + sr
+--    local ig = volume * (eg - sg) + sg
+--    local ib = volume * (eb - sb) + sb
+--    interpol_colour = string.format("%.2x%.2x%.2x", ir, ig, ib)
+--    if string.find(status, "on", 1, true) then
+--        volume = " <span background='#" .. interpol_colour .. "'>   </span>"
+--    else
+--        volume = " <span color='red' background='#" .. interpol_colour .. "'> M </span>"
+--    end
+--    widget:set_markup(volume)
+-- end
 
-update_volume(volume_widget)
+-- update_volume(volume_widget)
 
-mytimer = timer({ timeout = 1 })
-mytimer:connect_signal("timeout", function () update_volume(volume_widget) end)
-mytimer:start()
+-- mytimer = timer({ timeout = 1 })
+-- mytimer:connect_signal("timeout", function () update_volume(volume_widget) end)
+-- mytimer:start()
 
 -- {{{ Wallpaper
 if beautiful.wallpaper then
@@ -289,8 +282,8 @@ for s = 1, screen.count() do
     right_layout:add(spr)
     right_layout:add(batwidget)
     right_layout:add(spr)
-    right_layout:add(volume_widget)
-    right_layout:add(spr)
+    -- right_layout:add(volume_widget)
+    -- right_layout:add(spr)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
@@ -343,12 +336,7 @@ globalkeys = awful.util.table.join(
                 client.focus:raise()
             end
         end),
-    awful.key({ }, "XF86AudioRaiseVolume", function ()
-		 awful.util.spawn("amixer set Master 9%+", false) end),
-    awful.key({ }, "XF86AudioLowerVolume", function ()
-		 awful.util.spawn("amixer set Master 9%-", false) end),
-    awful.key({ }, "XF86AudioMute", function ()
-		 awful.util.spawn("amixer sset Master toggle", false) end),
+
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
@@ -547,7 +535,13 @@ function run_once(cmd)
 end
 
 run_once("/usr/lib/gnome-settings-daemon/gnome-settings-daemon")
+run_once("/usr/lib/gnome-settings-daemon/gnome-fallback-media-keys-helper")
+run_once("/usr/lib/gnome-settings-daemon/gnome-fallback-mount-helper")
+run_once("gnome-screensaver")
 run_once("nm-applet")
+run_once("synapse")
+
+
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
