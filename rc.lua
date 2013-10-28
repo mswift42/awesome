@@ -46,7 +46,7 @@ beautiful.init("/usr/share/awesome/themes/zenburn/theme.lua")
 theme.wallpaper = "/home/martin/.config/awesome/themes/wall.png"
 
 -- This is used later as the default terminal and editor to run.
-terminal = "gnome-terminal"
+terminal = "terminology"
 editor = os.getenv("EDITOR") or "emacs"
 -- editor_cmd = terminal .. " -e " .. editor
 editor_cmd = "emacs"
@@ -87,9 +87,9 @@ gray = beautiful.fg_normal
 
 
 -- CPU
-cpuwidget = lain.widgets.sysload({
+cpuwidget = lain.widgets.cpu({
     settings = function()
-        widget:set_markup(markup(gray, " Load ") .. load_1 .. " ")
+        widget:set_markup(markup(gray, " Cpu ") .. cpu_now.usage .. " ")
     end
 })
 -- Net
@@ -109,6 +109,13 @@ batwidget = lain.widgets.bat({
         if bat_perc == "N/A" then bat_perc = "Plug" end
         widget:set_markup(markup(gray, " Bat ") .. bat_perc .. " ")
     end
+})
+
+-- Cpu Temp
+tempwidget = lain.widgets.temp({
+				  settings = function()
+				     widget:set_markup(markup(gray, " Temp ") .. coretemp_now .. " ")
+				  end
 })
 
 
@@ -246,6 +253,8 @@ for s = 1, screen.count() do
     right_layout:add(spr)
     -- right_layout:add(volume_widget)
     -- right_layout:add(spr)
+    right_layout:add(tempwidget)
+    right_layout:add(spr)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
