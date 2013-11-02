@@ -46,7 +46,7 @@ beautiful.init("/usr/share/awesome/themes/zenburn/theme.lua")
 theme.wallpaper = "/home/martin/.config/awesome/themes/wall.png"
 
 -- This is used later as the default terminal and editor to run.
-terminal = "terminology"
+terminal = "urxvt"
 editor = os.getenv("EDITOR") or "emacs"
 -- editor_cmd = terminal .. " -e " .. editor
 editor_cmd = "emacs"
