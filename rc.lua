@@ -46,7 +46,7 @@ beautiful.init("/usr/share/awesome/themes/zenburn/theme.lua")
 theme.wallpaper = "/home/martin/.config/awesome/themes/wall.png"
 
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvt"
+terminal = "gnome-terminal"
 editor = os.getenv("EDITOR") or "emacs"
 -- editor_cmd = terminal .. " -e " .. editor
 editor_cmd = "emacs"
@@ -68,12 +68,11 @@ local layouts =
     awful.layout.suit.tile,
     lain.layout.termfair,
     awful.layout.suit.tile.left,
-    awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
-    awful.layout.suit.fair,
-    --awful.layout.suit.fair.horizontal,
-    awful.layout.suit.spiral,
-    --awful.layout.suit.spiral.dwindle,
+    -- awful.layout.suit.fair,
+    -- awful.layout.suit.fair.horizontal,
+    -- awful.layout.suit.spiral,
+    -- awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
     awful.layout.suit.max.fullscreen,
     awful.layout.suit.magnifier
@@ -512,6 +511,7 @@ run_once("gnome-screensaver")
 run_once("nm-applet")
 run_once("synapse")
 run_once("conky")
+
 
 
 
