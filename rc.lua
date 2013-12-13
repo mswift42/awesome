@@ -43,7 +43,7 @@ end
 -- Themes define colours, icons, and wallpapers
 beautiful.init("/usr/share/awesome/themes/zenburn/theme.lua")
 -- set wallpaper :
-theme.wallpaper = "/home/martin/.config/awesome/themes/wall.png"
+theme.wallpaper = "/usr/share/backgrounds/aura/johannesvandonge_0.jpg"
 
 -- This is used later as the default terminal and editor to run.
 terminal = "gnome-terminal"
