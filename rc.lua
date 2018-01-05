@@ -56,7 +56,8 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(awful.util.get_themes_dir() .. "zenburn/theme.lua")
+-- beautiful.init(awful.util.get_themes_dir() .. "zenburn/theme.lua")
+beautiful.init("/home/martin/.config/awesome/awesome-themes/dunzor2/theme.lua")
 beautiful.wallpaper = "/home/martin/Pictures/snowy-black-forest-winter-wallpaper-1920x1080.jpg"
 
 -- This is used later as the default terminal and editor to run.
