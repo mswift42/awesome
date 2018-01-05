@@ -1,1 +1,0 @@
-/home/martin/.config/awesome/rc.lua
