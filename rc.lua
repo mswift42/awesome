@@ -228,6 +228,12 @@ tempwidget = lain.widget.temp({
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
+tags = {
+    names = {"main", "emacs", "www", "pdf","office","6",7,8,9},
+    layout = {layouts[3],layouts[2],layouts[2],layouts[1],layouts[6],
+              layouts[3],layouts[2],layouts[1],layouts[2]
+}}
+
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
