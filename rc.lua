@@ -196,11 +196,19 @@ markup = lain.util.markup
 white = beautiful.fg_focus
 gray = beautiful.fg_normal
 
+spr = wibox.widget.textbox(' ')
+
 -- CPU
 cpuwidget = lain.widget.cpu({
 	settings = function()
-		widget:set_markup(markup(gray, " Cpu ") .. cpu_now.usage .. " ")
+           widget:set_markup(markup(gray, " Cpu ") .. cpu_now.usage .. " ")
 	end
+})
+
+memwidget = lain.widget.mem({
+      settings = function()
+         widget:set_markup(markup(gray, " Mem ") .. mem_now.used .. " ")
+      end
 })
 
 tempwidget = lain.widget.temp({
@@ -240,8 +248,8 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Add widgets to the wibox
     s.mywibox:setup {
-        layout = wibox.layout.align.horizontal,
-        { -- Left widgets
+       layout = wibox.layout.align.horizontal,
+       { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             mylauncher,
             s.mytaglist,
@@ -251,7 +259,11 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
 	    cpuwidget,
+	    spr,
+	    memwidget,
+	    spr,
 	    tempwidget,
+	    spr,
             mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
