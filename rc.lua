@@ -201,14 +201,21 @@ spr = wibox.widget.textbox(' ')
 -- CPU
 cpuwidget = lain.widget.cpu({
 	settings = function()
-           widget:set_markup(markup(gray, " Cpu ") .. cpu_now.usage .. " ")
+		widget:set_markup(markup(gray, " Cpu ") .. cpu_now.usage .. " ")
 	end
 })
 
 memwidget = lain.widget.mem({
-      settings = function()
-         widget:set_markup(markup(gray, " Mem ") .. mem_now.used .. " ")
-      end
+	settings = function()
+		widget:set_markup(markup(gray, " Mem ") .. mem_now.used .. " ")
+	end
+})
+
+netwidget = lain.widget.net({
+	settings = function()
+		widget:set_markup(markup(gray, " Net ") .. net_now.received .. ", " .. net_now.sent .. " ")
+	end
+
 })
 
 tempwidget = lain.widget.temp({
@@ -248,8 +255,8 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Add widgets to the wibox
     s.mywibox:setup {
-       layout = wibox.layout.align.horizontal,
-       { -- Left widgets
+        layout = wibox.layout.align.horizontal,
+        { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             mylauncher,
             s.mytaglist,
@@ -261,6 +268,8 @@ awful.screen.connect_for_each_screen(function(s)
 	    cpuwidget,
 	    spr,
 	    memwidget,
+	    spr,
+	    netwidget,
 	    spr,
 	    tempwidget,
 	    spr,
