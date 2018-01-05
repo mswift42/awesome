@@ -10,6 +10,8 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
+-- Load Lain
+local lain = require("lain")
 
 -- Load Debian menu entries
 require("debian.menu")
@@ -189,6 +191,17 @@ local function set_wallpaper(s)
         gears.wallpaper.maximized(wallpaper, s, true)
     end
 end
+
+markup = lain.util.markup
+white = beautiful.fg_focus
+gray = beautiful.fg_normal
+
+-- CPU
+cpuwidget = lain.widget.cpu({
+	settings = function()
+		widget:set_markup(markup(gray, " Cpu ") .. cpu_now.usage .. " ")
+	end
+})
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
