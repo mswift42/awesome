@@ -276,6 +276,8 @@ awful.screen.connect_for_each_screen(function(s)
 	    spr,
             mykeyboardlayout,
             wibox.widget.systray(),
+            spr,
+            spr,
             mytextclock,
             s.mylayoutbox,
         },
