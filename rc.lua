@@ -13,6 +13,7 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 -- Load Lain
 local lain = require("lain")
 
+
 -- Load Debian menu entries
 require("debian.menu")
 
@@ -221,7 +222,7 @@ netwidget = lain.widget.net({
 
 tempwidget = lain.widget.temp({
 	settings = function()
-		widget:set_markup(markup(gray, " Temp ") .. coretemp_now .. " ")
+		widget:set_markup(markup(gray, " °C " ) .. coretemp_now .. " ")
 	end
 })
 
