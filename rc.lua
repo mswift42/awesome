@@ -203,6 +203,12 @@ cpuwidget = lain.widget.cpu({
 	end
 })
 
+tempwidget = lain.widget.temp({
+	settings = function()
+		widget:set_markup(markup(gray, " Temp ") .. coretemp_now .. " ")
+	end
+})
+
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
@@ -244,6 +250,8 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+	    cpuwidget,
+	    tempwidget,
             mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
