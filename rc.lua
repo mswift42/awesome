@@ -231,8 +231,8 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 tags = {
     names = {"main", "editor", "www", "pdf","office","6",7,8,9},
-    layout = {awful.layout.layouts[3],awful.layout.layouts[2],awful.layout.layouts[2],awful.layout.layouts[1],awful.layout.layouts[6],
-              awful.layout.layouts[3],awful.layout.layouts[2],awful.layout.layouts[1],awful.layout.layouts[2]
+    layout = {awful.layout.layouts[3],awful.layout.layouts[2],awful.layout.layouts[2],awful.layout.layouts[1],awful.layout.layouts[1],
+              awful.layout.layouts[1],awful.layout.layouts[2],awful.layout.layouts[1],awful.layout.layouts[2]
 }}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
@@ -390,8 +390,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
               {description = "run prompt", group = "launcher"}),
 
-    awful.key({ modkey }, "x",
-              function ()
+    awful.key({ modkey, "Shift" }, "x",
+       function ()
                   awful.prompt.run {
                     prompt       = "Run Lua code: ",
                     textbox      = awful.screen.focused().mypromptbox.widget,
@@ -412,28 +412,30 @@ clientkeys = awful.util.table.join(
         end,
         {description = "toggle fullscreen", group = "client"}),
     awful.key({ modkey,           }, "c",      function (c) c:kill()                         end,
-              {description = "close", group = "client"}),
+       {description = "close", group = "client"}),
+    awful.key({ modkey,           }, "x",      function (c) c:kill()                        end,
+       {description = "close", group = "client"}),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
-              {description = "toggle floating", group = "client"}),
+       {description = "toggle floating", group = "client"}),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
-              {description = "move to master", group = "client"}),
+       {description = "move to master", group = "client"}),
     awful.key({ modkey,           }, "o",      function (c) c:move_to_screen()               end,
-              {description = "move to screen", group = "client"}),
+       {description = "move to screen", group = "client"}),
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
-              {description = "toggle keep on top", group = "client"}),
+       {description = "toggle keep on top", group = "client"}),
     awful.key({ modkey,           }, "n",
-        function (c)
-            -- The client currently has the input focus, so it cannot be
-            -- minimized, since minimized clients can't have the focus.
-            c.minimized = true
-        end ,
-        {description = "minimize", group = "client"}),
+       function (c)
+          -- The client currently has the input focus, so it cannot be
+          -- minimized, since minimized clients can't have the focus.
+          c.minimized = true
+       end ,
+       {description = "minimize", group = "client"}),
     awful.key({ modkey,           }, "m",
-        function (c)
-            c.maximized = not c.maximized
-            c:raise()
-        end ,
-        {description = "maximize", group = "client"})
+       function (c)
+          c.maximized = not c.maximized
+          c:raise()
+       end ,
+       {description = "maximize", group = "client"})
 )
 
 -- Bind all key numbers to tags.
@@ -507,7 +509,8 @@ awful.rules.rules = {
                      keys = clientkeys,
                      buttons = clientbuttons,
                      screen = awful.screen.preferred,
-                     placement = awful.placement.no_overlap+awful.placement.no_offscreen
+                     placement = awful.placement.no_overlap+awful.placement.no_offscreen,
+                     size_hints_honor = true
      }
     },
 
