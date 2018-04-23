@@ -22,6 +22,7 @@ local autorunApps =
 "mate-volume-control-applet",
 "mate-settings-daemon",
 "mate-power-manager",
+"mate-session-manager",
 "synapse",
 "nm-applet"
 }
